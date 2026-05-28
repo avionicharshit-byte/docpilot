@@ -1,0 +1,18 @@
+@import '@fontsource-variable/inter';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html { -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; }
+  body { @apply bg-mist text-ink font-sans; margin: 0; }
+  * { scrollbar-width: thin; scrollbar-color: #d1d5db transparent; }
+  *::-webkit-scrollbar { width: 6px; height: 6px; }
+  *::-webkit-scrollbar-thumb { background: #d1d5db; border-radius: 9999px; }
+  *::-webkit-scrollbar-track { background: transparent; }
+}
+
+@layer utilities {
+  .text-balance { text-wrap: balance; }
+}
