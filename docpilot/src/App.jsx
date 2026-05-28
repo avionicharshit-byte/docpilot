@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useRef, useEffect } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import Sidebar from './components/Sidebar'
 import Overview from './components/sections/Overview'
@@ -22,11 +22,16 @@ const SECTIONS = {
 export default function App() {
   const [active, setActive] = useState('overview')
   const Section = SECTIONS[active] || Overview
+  const mainRef = useRef(null)
+
+  useEffect(() => {
+    mainRef.current?.scrollTo({ top: 0 })
+  }, [active])
 
   return (
     <div className="flex h-screen overflow-hidden bg-canvas font-sans">
       <Sidebar active={active} setActive={setActive} />
-      <main className="flex-1 overflow-y-auto bg-mist">
+      <main ref={mainRef} className="flex-1 overflow-y-auto bg-mist">
         <AnimatePresence mode="wait">
           <motion.div
             key={active}
