@@ -40,7 +40,7 @@ export default function Sidebar({ active, setActive }) {
       </nav>
       <div className="px-4 py-4 border-t border-line">
         <div className="text-[11px] text-ink-600/50 leading-relaxed">
-          PM Assignment · Superleap<br />BFSI · Vehicle Lending
+            <br />BFSI · Vehicle Lending
         </div>
       </div>
     </aside>

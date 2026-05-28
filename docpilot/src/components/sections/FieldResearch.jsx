@@ -14,7 +14,7 @@ export default function FieldResearch() {
       <SectionHeader
         eyebrow="Voice of the User"
         title="Field Research — IDFC Bank Interview"
-        lead="We interviewed a frontline vehicle-loan officer at IDFC Bank. This is his real workflow, in his words. What he asked for became DocPilot."
+        lead="I interviewed a frontline vehicle-loan officer at IDFC Bank. This is his real workflow, in his words. What he asked for became DocPilot."
       />
 
       {/* Workflow diagram */}

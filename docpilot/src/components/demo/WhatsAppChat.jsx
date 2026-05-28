@@ -2,13 +2,16 @@ import { useEffect, useRef } from 'react'
 import Icon from '../Icon'
 
 const DOC_COLORS = {
-  pan: { bg: 'bg-blue-50', border: 'border-blue-200', icon: 'text-blue-500', label: 'PAN Card' },
-  aadhaar: { bg: 'bg-purple-50', border: 'border-purple-200', icon: 'text-purple-500', label: 'Aadhaar' },
-  salary: { bg: 'bg-green-50', border: 'border-green-200', icon: 'text-green-600', label: 'Salary Slip' },
-  itr: { bg: 'bg-orange-50', border: 'border-orange-200', icon: 'text-orange-500', label: 'Form 16 / ITR' },
-  address: { bg: 'bg-teal-50', border: 'border-teal-200', icon: 'text-teal-500', label: 'Address Proof' },
-  batch: { bg: 'bg-indigo-50', border: 'border-indigo-200', icon: 'text-indigo-500', label: 'Multiple docs' },
-  photo: { bg: 'bg-pink-50', border: 'border-pink-200', icon: 'text-pink-500', label: 'Photo' },
+  pan:            { bg: 'bg-blue-50',   border: 'border-blue-200',   icon: 'text-blue-500',   label: 'PAN Card' },
+  aadhaar:        { bg: 'bg-purple-50', border: 'border-purple-200', icon: 'text-purple-500', label: 'Aadhaar' },
+  salary:         { bg: 'bg-green-50',  border: 'border-green-200',  icon: 'text-green-600',  label: 'Salary Slip' },
+  itr:            { bg: 'bg-orange-50', border: 'border-orange-200', icon: 'text-orange-500', label: 'Form 16 / ITR' },
+  address:        { bg: 'bg-teal-50',   border: 'border-teal-200',   icon: 'text-teal-500',   label: 'Address Proof' },
+  batch:          { bg: 'bg-indigo-50', border: 'border-indigo-200', icon: 'text-indigo-500', label: 'Multiple docs' },
+  photo:          { bg: 'bg-pink-50',   border: 'border-pink-200',   icon: 'text-pink-500',   label: 'Photo' },
+  gst:            { bg: 'bg-yellow-50', border: 'border-yellow-200', icon: 'text-yellow-600', label: 'GST Certificate' },
+  vehicle_rc:     { bg: 'bg-cyan-50',   border: 'border-cyan-200',   icon: 'text-cyan-600',   label: 'Vehicle RC' },
+  business_proof: { bg: 'bg-rose-50',   border: 'border-rose-200',   icon: 'text-rose-500',   label: 'Business Proof' },
 }
 
 function DocCard({ doc, caption }) {
@@ -44,7 +47,7 @@ function TypingIndicator() {
   )
 }
 
-export default function WhatsAppChat({ chat, typing }) {
+export default function WhatsAppChat({ chat, typing, customerName = 'Customer', customerPhone = '' }) {
   const endRef = useRef(null)
 
   useEffect(() => {
@@ -59,8 +62,8 @@ export default function WhatsAppChat({ chat, typing }) {
           <Icon name="User" size={18} />
         </div>
         <div>
-          <div className="text-[13px] font-semibold text-white">Rahul Sharma</div>
-          <div className="text-[11px] text-white/60">+91 98765 43210</div>
+          <div className="text-[13px] font-semibold text-white">{customerName}</div>
+          <div className="text-[11px] text-white/60">{customerPhone}</div>
         </div>
         <div className="ml-auto">
           <Icon name="Phone" size={18} className="text-white/60" />
