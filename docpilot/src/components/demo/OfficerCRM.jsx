@@ -32,6 +32,20 @@ function FlashField({ value }) {
 
 export default function OfficerCRM({ state, script, selectedId, onSelectApp, onResolve }) {
   const { checklist, fields, flags, nudge, payoff, stats, status, awaitingOfficer } = state
+  const [listOpen, setListOpen] = useState(false)
+  const selectedApp = APPLICATIONS.find(a => a.id === selectedId)
+  const crmFieldsRef = useRef(null)
+
+  useEffect(() => {
+    if (payoff) {
+      crmFieldsRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+    }
+  }, [payoff])
+
+  function handleSelect(id) {
+    onSelectApp(id)
+    setListOpen(false)
+  }
 
   return (
     <div className="flex flex-col h-full overflow-hidden">
@@ -46,7 +60,7 @@ export default function OfficerCRM({ state, script, selectedId, onSelectApp, onR
         <span className="text-[11px] text-ink-600/60">4 active · click to switch</span>
       </div>
 
-      {/* Sticky approve-match banner */}
+      {/* Sticky approve banner */}
       <AnimatePresence>
         {awaitingOfficer && (
           <motion.div
@@ -74,35 +88,69 @@ export default function OfficerCRM({ state, script, selectedId, onSelectApp, onR
         )}
       </AnimatePresence>
 
-      <div className="flex-1 overflow-y-auto">
-        {/* App list — all clickable */}
-        <div className="border-b border-line">
-          {APPLICATIONS.map(app => (
+      {/* Applicant selector — compact bar when selected, expandable list */}
+      <div className="shrink-0 border-b border-line">
+        {/* Compact active-applicant bar */}
+        {!listOpen && selectedApp && (
+          <div className="flex items-center gap-3 px-4 py-2.5 bg-brand-tint/40">
+            <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-ink text-brand-light text-[12px] font-bold">
+              {selectedApp.name.split(' ').map(w => w[0]).join('').slice(0, 2)}
+            </div>
+            <div className="flex-1 min-w-0">
+              <div className="flex items-center gap-1.5">
+                <span className="text-[12px] font-semibold text-ink truncate">{selectedApp.name}</span>
+                <span className="rounded-full bg-brand text-white text-[9px] px-1.5 py-0.5 font-bold uppercase tracking-wide shrink-0">Active</span>
+              </div>
+              <div className="text-[11px] text-ink-600 truncate">{selectedApp.loan} · {selectedApp.amount} · {selectedApp.profile}</div>
+            </div>
             <button
-              key={app.id}
-              onClick={() => onSelectApp(app.id)}
-              className={`w-full flex items-center gap-3 px-4 py-3 border-b border-line last:border-0 text-left transition-colors
-                ${selectedId === app.id ? 'bg-brand-tint/40' : 'hover:bg-mist'}`}
+              onClick={() => setListOpen(true)}
+              className="shrink-0 text-[11px] font-semibold text-brand-dark border border-brand/30 rounded-lg px-2.5 py-1 hover:bg-brand-tint transition-colors"
             >
-              <div className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-[12px] font-bold
-                ${selectedId === app.id ? 'bg-ink text-brand-light' : 'bg-mist text-ink-600'}`}>
-                {app.name.split(' ').map(w => w[0]).join('').slice(0, 2)}
-              </div>
-              <div className="flex-1 min-w-0">
-                <div className="flex items-center gap-1.5">
-                  <span className="text-[12px] font-semibold text-ink truncate">{app.name}</span>
-                  {selectedId === app.id && (
-                    <span className="rounded-full bg-brand text-white text-[9px] px-1.5 py-0.5 font-bold uppercase tracking-wide shrink-0">Active</span>
-                  )}
-                </div>
-                <div className="text-[11px] text-ink-600 truncate">{app.loan} · {app.amount} · {app.profile}</div>
-              </div>
-              <StatusPill status={selectedId === app.id ? status : app.defaultStatus} />
+              Switch
             </button>
-          ))}
-        </div>
+          </div>
+        )}
 
-        {/* Detail view — live state for selected applicant */}
+        {/* Expanded applicant list */}
+        <AnimatePresence>
+          {listOpen && (
+            <motion.div
+              initial={{ height: 0, opacity: 0 }}
+              animate={{ height: 'auto', opacity: 1 }}
+              exit={{ height: 0, opacity: 0 }}
+              className="overflow-hidden"
+            >
+              {APPLICATIONS.map(app => (
+                <button
+                  key={app.id}
+                  onClick={() => handleSelect(app.id)}
+                  className={`w-full flex items-center gap-3 px-4 py-3 border-b border-line last:border-0 text-left transition-colors
+                    ${selectedId === app.id ? 'bg-brand-tint/40' : 'hover:bg-mist'}`}
+                >
+                  <div className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-[12px] font-bold
+                    ${selectedId === app.id ? 'bg-ink text-brand-light' : 'bg-mist text-ink-600'}`}>
+                    {app.name.split(' ').map(w => w[0]).join('').slice(0, 2)}
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-center gap-1.5">
+                      <span className="text-[12px] font-semibold text-ink truncate">{app.name}</span>
+                      {selectedId === app.id && (
+                        <span className="rounded-full bg-brand text-white text-[9px] px-1.5 py-0.5 font-bold uppercase tracking-wide shrink-0">Active</span>
+                      )}
+                    </div>
+                    <div className="text-[11px] text-ink-600 truncate">{app.loan} · {app.amount} · {app.profile}</div>
+                  </div>
+                  <StatusPill status={selectedId === app.id ? status : app.defaultStatus} />
+                </button>
+              ))}
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </div>
+
+      {/* Detail view — checklist + CRM fields */}
+      <div className="flex-1 overflow-y-auto">
         <div className="px-4 py-4">
           <div className="flex items-center justify-between mb-3">
             <div className="text-[11px] font-semibold uppercase tracking-widest text-ink-600/60">
@@ -145,7 +193,7 @@ export default function OfficerCRM({ state, script, selectedId, onSelectApp, onR
           </div>
 
           {/* CRM Fields */}
-          <div className="text-[11px] font-semibold uppercase tracking-widest text-ink-600/60 mb-2">Auto-filled CRM fields</div>
+          <div ref={crmFieldsRef} className="text-[11px] font-semibold uppercase tracking-widest text-ink-600/60 mb-2">Auto-filled CRM fields</div>
           <div className="rounded-xl border border-line overflow-hidden mb-4">
             {FIELD_DEF.map((f, i) => (
               <div key={f.key} className={`flex items-center gap-3 px-3 py-2.5 ${i < FIELD_DEF.length - 1 ? 'border-b border-line' : ''}`}>
