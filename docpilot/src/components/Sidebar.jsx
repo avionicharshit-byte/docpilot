@@ -9,7 +9,7 @@ export default function Sidebar({ active, setActive }) {
   }, {})
 
   return (
-    <aside className="w-56 shrink-0 flex flex-col h-full border-r border-line bg-canvas overflow-y-auto">
+    <aside className="hidden md:flex w-56 shrink-0 flex-col h-full border-r border-line bg-canvas overflow-y-auto">
       <div className="px-4 py-4 border-b border-line">
         <Logo />
       </div>

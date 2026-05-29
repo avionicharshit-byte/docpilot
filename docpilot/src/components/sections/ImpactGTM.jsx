@@ -96,8 +96,8 @@ export default function ImpactGTM() {
       <div>
         <Eyebrow className="mb-4">Go-to-market</Eyebrow>
         <div className="grid grid-cols-2 gap-4">
-          {GTM.map(g => (
-            <Card key={g.title} className="p-5 flex gap-4">
+          {GTM.map((g, i) => (
+            <Card key={g.title} className={`p-5 flex gap-4 ${i === GTM.length - 1 && GTM.length % 2 !== 0 ? 'col-span-2' : ''}`}>
               <FeatureIcon name={g.icon} tone="brand" />
               <div>
                 <div className="text-[13px] font-semibold text-ink mb-1">{g.title}</div>

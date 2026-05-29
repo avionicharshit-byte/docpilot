@@ -24,9 +24,17 @@ export default function Overview({ setActiveSection }) {
           <p className="text-2xl font-semibold text-white/90 mb-2 max-w-xl">
             Paperwork, on autopilot.
           </p>
-          <p className="text-white/60 text-[15px] leading-relaxed max-w-2xl">
+          <p className="text-white/60 text-[15px] leading-relaxed max-w-2xl mb-5">
             An AI document agent inside Superleap that runs the entire WhatsApp doc-collection loop for vehicle-loan officers — requesting, reading, validating, and chasing — handing the file back only when it's complete and clean.
           </p>
+          <button
+            onClick={() => setActiveSection('demo')}
+            className="inline-flex items-center gap-2 rounded-xl bg-brand text-white px-5 py-2.5 text-sm font-semibold shadow hover:bg-brand-dark transition-colors"
+          >
+            <Icon name="PlayCircle" size={17} />
+            See the Live Demo
+            <Icon name="ChevronRight" size={15} />
+          </button>
         </div>
       </div>
 

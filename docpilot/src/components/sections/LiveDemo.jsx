@@ -66,6 +66,7 @@ export default function LiveDemo() {
   const [state, dispatch] = useReducer(reducer, buildInitialState(script))
   const [stepIndex, setStepIndex] = useState(-1)
   const [running, setRunning] = useState(false)
+  const [mobileTab, setMobileTab] = useState('crm')
   const timeoutsRef = useRef([])
 
   function clearAll() {
@@ -75,7 +76,6 @@ export default function LiveDemo() {
     setRunning(false)
   }
 
-  // Load preloaded state (or fresh) when applicant changes
   useEffect(() => {
     clearAll()
     const s = DEMO_SCRIPTS[selectedId]
@@ -121,17 +121,16 @@ export default function LiveDemo() {
   const selectedApp = APPLICATIONS.find(a => a.id === selectedId)
 
   return (
-    <div className="flex flex-col h-screen overflow-hidden">
+    <div className="flex flex-col h-full overflow-hidden">
       {/* Top bar */}
-      <div className="shrink-0 px-6 py-3 border-b border-line bg-canvas flex items-start justify-between">
+      <div className="shrink-0 px-4 md:px-6 py-3 border-b border-line bg-canvas flex items-start justify-between">
         <div>
           <Eyebrow className="mb-0.5">Live Demo</Eyebrow>
           <div className="text-[15px] font-bold text-ink">DocPilot in action</div>
-          <p className="text-[12px] text-ink-600 mt-0.5">
+          <p className="text-[12px] text-ink-600 mt-0.5 hidden md:block">
             Select any applicant · step through their scenario · Left = CRM · Right = WhatsApp
           </p>
         </div>
-        {/* Scenario badge */}
         <div className="text-right">
           <div className="text-[11px] font-semibold text-ink">{selectedApp?.name}</div>
           <div className="text-[11px] text-ink-600">{selectedApp?.loan} · {selectedApp?.profile}</div>
@@ -141,10 +140,28 @@ export default function LiveDemo() {
         </div>
       </div>
 
+      {/* Mobile tab switcher */}
+      <div className="md:hidden shrink-0 flex border-b border-line bg-canvas">
+        <button
+          onClick={() => setMobileTab('crm')}
+          className={`flex-1 py-2.5 text-[12px] font-semibold transition-colors
+            ${mobileTab === 'crm' ? 'text-brand-dark border-b-2 border-brand' : 'text-ink-600'}`}
+        >
+          CRM View
+        </button>
+        <button
+          onClick={() => setMobileTab('whatsapp')}
+          className={`flex-1 py-2.5 text-[12px] font-semibold transition-colors
+            ${mobileTab === 'whatsapp' ? 'text-brand-dark border-b-2 border-brand' : 'text-ink-600'}`}
+        >
+          WhatsApp
+        </button>
+      </div>
+
       {/* Two-panel demo */}
-      <div className="flex flex-1 overflow-hidden">
+      <div className="flex flex-col md:flex-row flex-1 overflow-hidden">
         {/* Left: Officer CRM */}
-        <div className="flex flex-col w-[44%] border-r border-line overflow-hidden bg-canvas">
+        <div className={`flex-col md:w-[44%] border-b md:border-b-0 md:border-r border-line overflow-hidden bg-canvas ${mobileTab !== 'crm' ? 'hidden md:flex' : 'flex'}`}>
           <div className="shrink-0 px-4 py-2 border-b border-line bg-mist flex items-center gap-2">
             <div className="h-2.5 w-2.5 rounded-full bg-danger/60" />
             <div className="h-2.5 w-2.5 rounded-full bg-warn/60" />
@@ -163,7 +180,7 @@ export default function LiveDemo() {
         </div>
 
         {/* Right: WhatsApp + Controls */}
-        <div className="flex flex-col flex-1 overflow-hidden">
+        <div className={`flex-col flex-1 overflow-hidden ${mobileTab !== 'whatsapp' ? 'hidden md:flex' : 'flex'}`}>
           <div className="shrink-0 px-4 py-2 border-b border-line bg-mist flex items-center gap-2">
             <div className="h-2.5 w-2.5 rounded-full bg-danger/60" />
             <div className="h-2.5 w-2.5 rounded-full bg-warn/60" />

@@ -175,8 +175,9 @@ export const COST_SUMMARY = {
 }
 
 export const GTM = [
-  { icon: 'Target', title: 'Beachhead', body: 'Digital-first NBFCs / fintech lenders (Superleap’s actual buyer; e.g. Razorpay-adjacent) where WhatsApp collection already works — not legacy PSU banks.' },
-  { icon: 'Crosshair', title: 'Wedge', body: 'Land on the single sharpest pain (doc collection), prove 2× throughput + faster TAT in a pilot, then expand across the loan lifecycle.' },
+  { icon: 'Target', title: 'Beachhead', body: 'Digital-first NBFCs / fintech lenders where WhatsApp collection already works — not legacy PSU banks. Superleap already serves Loans24 in this space; DocPilot is the natural next product for that account and a wedge into other NBFC/fintech lenders.' },
+  { icon: 'Crosshair', title: 'Wedge', body: 'Land on the single sharpest pain (doc collection), prove 2× throughput + faster TAT in a pilot, then expand across the loan lifecycle. Superleap already markets a Lending CRM vertical — DocPilot is the AI feature that makes it defensible against horizontal CRMs, not a one-off add-on.' },
   { icon: 'Tag', title: 'Pricing', body: 'Per-seat add-on or per-file usage pricing on top of the Superleap CRM.' },
   { icon: 'HeartHandshake', title: 'Adoption hook', body: 'Officers feel relief on day one (no manual typing/chasing); managers get throughput + TAT dashboards.' },
+  { icon: 'Zap', title: 'SuperAgent fit', body: 'Superleap already brands its agentic AI layer as "SuperAgents." DocPilot slots in as the first SuperAgent for lending — no new naming needed, instant fit with their existing platform story.' },
 ]
