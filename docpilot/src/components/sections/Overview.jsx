@@ -27,6 +27,26 @@ export default function Overview({ setActiveSection }) {
           <p className="text-white/60 text-[15px] leading-relaxed max-w-2xl mb-5">
             An AI document agent inside Superleap that runs the entire WhatsApp doc-collection loop for vehicle-loan officers — requesting, reading, validating, and chasing — handing the file back only when it's complete and clean.
           </p>
+
+          {/* Hero metric */}
+          <div className="flex items-center gap-3 mb-5">
+            <div className="rounded-xl bg-white/10 px-4 py-2.5 text-center">
+              <div className="text-2xl font-bold text-danger">4–5</div>
+              <div className="text-[10px] text-white/50 uppercase tracking-wide mt-0.5">files/day before</div>
+            </div>
+            <div className="flex h-7 w-7 items-center justify-center rounded-full bg-brand/20 text-brand-light shrink-0">
+              <Icon name="ArrowRight" size={15} />
+            </div>
+            <div className="rounded-xl bg-white/10 px-4 py-2.5 text-center">
+              <div className="text-2xl font-bold text-brand-light">8–10</div>
+              <div className="text-[10px] text-white/50 uppercase tracking-wide mt-0.5">files/day after</div>
+            </div>
+            <div className="ml-1 rounded-xl bg-brand/20 px-4 py-2.5 text-center">
+              <div className="text-2xl font-bold text-brand-light">≈2×</div>
+              <div className="text-[10px] text-brand-light/60 uppercase tracking-wide mt-0.5">throughput</div>
+            </div>
+          </div>
+
           <button
             onClick={() => setActiveSection('demo')}
             className="inline-flex items-center gap-2 rounded-xl bg-brand text-white px-5 py-2.5 text-sm font-semibold shadow hover:bg-brand-dark transition-colors"
